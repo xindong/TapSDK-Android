@@ -51,7 +51,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    compile(name:'TapSDK_0.0.2', ext:'aar')
+    compile(name:'TapSDK_0.0.3', ext:'aar')
+    compile(name:'TDSCommon_1.1.0', ext:'aar')
     compile(name:'oaid_sdk_1.0.23', ext:'aar')
 
 }

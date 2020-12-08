@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         Profile.fetchProfileForCurrentAccessToken(new ApiCallback<Profile>() {
           @Override
           public void onSuccess(Profile profile) {
-            TapDB.setUser("2", profile.getOpenid(), LoginType.TapTap);
+            TapDB.setUser(profile.getOpenid(), profile.getOpenid(), LoginType.TapTap);
           }
 
           @Override
