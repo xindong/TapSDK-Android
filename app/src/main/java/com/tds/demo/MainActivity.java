@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
         // 开启动态
         TdsInitializer.enableMoment(this);
-        TapTapMomentSdk.setHandleLoginResult(true);
 
         //注册登录回调
         TapLoginHelper.registerLoginCallback(new TapLoginResultCallback() {
@@ -62,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("MainActivity", "onLoginError" + " " + accountGlobalError.toJsonString());
             }
         });
-
     }
 
     public void sdkLogin(View view) {
@@ -80,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCallback(int i, String s) {
                 Log.e("MainActivity", "onCallback moment " + "  " + i + "   " + s);
+                if(i==TapTapMomentSdk.CALLBACK_CODE_LOGIN_SUCCESS)
+                    TapTapMomentSdk.setHandleLoginResult(true);
             }
         });
     }

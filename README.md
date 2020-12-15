@@ -23,8 +23,8 @@ repositories{
 }  
 dependencies {  
 ...  
-    implementation (name:'TapSDK_0.0.5', ext:'aar')  
-    implementation (name:'TDSCommon_1.1.1', ext:'aar') 
+    implementation (name:'TapSDK_0.0.10', ext:'aar')  
+    implementation (name:'TDSCommon_1.1.3', ext:'aar') 
 }  
 ```  
 
@@ -44,28 +44,27 @@ TdsInitializer.init(tdsConfig);
 
 ## 6. 注册登录回调
 监听登录的结果  
-**API**  `setLoginResultCallback()`
+**API**  `registerLoginCallback()`
 
 **示例代码**
 
 ```java
-TapLoginHelper.getInstance().addLoginResultCallback(new TapLoginHelper.TapLoginResultCallback() {
-    @Override
-    public void onLoginSuccess(AccessToken accessToken) {
-        Log.e(Tag, "onLoginSuccess");
-    
-    }
-    
-    @Override
-    public void onLoginCancel() {
-    
-    }
-    
-    @Override
-    public void onLoginError(Throwable throwable) {
-        Log.e(Tag, "onLoginError: " + throwable.getMessage());
-    }
-});
+TapLoginHelper.registerLoginCallback(new TapLoginResultCallback() {
+     @Override
+     public void onLoginSuccess(AccessToken accessToken) {
+         Log.e("MainActivity", "onLoginSuccess" + "" + accessToken);
+     }
+
+     @Override
+     public void onLoginCancel() {
+         Log.e("MainActivity", "onLoginCancel" + "");
+     }
+
+     @Override
+     public void onLoginError(com.taptap.sdk.AccountGlobalError accountGlobalError) {
+         Log.e("MainActivity", "onLoginError" + " " + accountGlobalError.toJsonString());
+     }
+ });
 ```
 
 ## 7. 登录
@@ -77,7 +76,7 @@ TapTap登录，当没有安装TapTap app时，会打开内置webview进行TapTap
  
 
 ```java
-TapLoginHelper.getInstance().startTapLogin(MainActivity.this,TapTapSdk.SCOPE_PUIBLIC_PROFILE);
+TapLoginHelper.startTapLogin(MainActivity.this,TapTapSdk.SCOPE_PUIBLIC_PROFILE);
 ```
 
 ## 8. 检查登录状态
@@ -88,7 +87,7 @@ TapLoginHelper.getInstance().startTapLogin(MainActivity.this,TapTapSdk.SCOPE_PUI
 
 ```java  
 //未登录用户会返回null
-if (TapLoginHelper.getInstance().getCurrentAccessToken() == null) {
+if (TapLoginHelper.getCurrentAccessToken() == null) {
     TapLoginHelper.getInstance().startTapLogin(MainActivity.this,TapTapSdk.SCOPE_PUIBLIC_PROFILE);
 } else {
    startGame();
@@ -109,7 +108,7 @@ TapLoginHelper.fetchProfileForCurrentAccessToken(new Api.ApiCallback<Profile>() 
     @Override
     public void onError(Throwable error) {
         Log.e(Tag, "checkLogin-onError");
-        TapLoginHelper.getInstance().startTapLogin(MainActivity.this, TapTapSdk.SCOPE_PUIBLIC_PROFILE);
+        TapLoginHelper.startTapLogin(MainActivity.this, TapTapSdk.SCOPE_PUIBLIC_PROFILE);
     }
 });
 ```
