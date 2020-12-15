@@ -15,7 +15,6 @@ import com.taptap.sdk.helper.TapLoginHelper;
 import com.taptap.sdk.helper.TapLoginHelper.TapLoginResultCallback;
 import com.taptap.sdk.net.Api.ApiCallback;
 import com.tds.TdsInitializer;
-import com.tds.common.net.error.AccountGlobalError;
 import com.tds.moment.TapTapMomentSdk;
 import com.tds.moment.TapTapMomentSdk.Config;
 import com.tds.moment.TapTapMomentSdk.TapMomentCallback;
@@ -43,6 +42,15 @@ public class MainActivity extends AppCompatActivity {
 
         // 开启动态
         TdsInitializer.enableMoment(this);
+        //注册动态回调。动态相关的回调都会到这里，详情 https://tapsdkdoc.xdrnd.com/tap-fun-moment#3-%E6%B7%BB%E5%8A%A0%E5%9B%9E%E8%B0%83
+        TapTapMomentSdk.setCallback(new TapMomentCallback() {
+            @Override
+            public void onCallback(int code, String msg) {
+                Log.e("MainActivity", "onCallback moment " + "  " + code + "   " + msg);
+                if (code == TapTapMomentSdk.CALLBACK_CODE_LOGIN_SUCCESS)
+                    TapTapMomentSdk.setHandleLoginResult(true);
+            }
+        });
 
         //注册登录回调
         TapLoginHelper.registerLoginCallback(new TapLoginResultCallback() {
@@ -74,14 +82,6 @@ public class MainActivity extends AppCompatActivity {
     public void sdkMoment(View view) {
         Config config = new Config();
         TapTapMomentSdk.openTapMoment(config);
-        TapTapMomentSdk.setCallback(new TapMomentCallback() {
-            @Override
-            public void onCallback(int i, String s) {
-                Log.e("MainActivity", "onCallback moment " + "  " + i + "   " + s);
-                if(i==TapTapMomentSdk.CALLBACK_CODE_LOGIN_SUCCESS)
-                    TapTapMomentSdk.setHandleLoginResult(true);
-            }
-        });
     }
 
     public void getRedPoint(View view) {
@@ -101,4 +101,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 }
