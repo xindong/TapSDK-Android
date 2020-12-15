@@ -10,13 +10,33 @@
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="登录"
+    android:text=" login"
     android:onClick="sdkLogin"/>
 
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="动态"
+    android:text="logout"
+    android:onClick="sdkLogout"/>
+
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="fetch user profile"
+    android:onClick="fetchUserProfile"/>
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="moment"
     android:onClick="sdkMoment"/>
+
+
+  <Button
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="red point"
+    android:onClick="getRedPoint"/>
 </LinearLayout>
