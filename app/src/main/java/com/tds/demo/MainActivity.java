@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -21,7 +22,8 @@ import com.tds.moment.TapTapMomentSdk.TapMomentCallback;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String Tag = "MainActivity";
+    private static final String TAG = "TDSDemoActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         TapTapMomentSdk.setCallback(new TapMomentCallback() {
             @Override
             public void onCallback(int code, String msg) {
-                Log.e("MainActivity", "onCallback moment " + "  " + code + "   " + msg);
+                Log.e(TAG, "onCallback" + "  code:" + code + "  msg:" + msg);
             }
         });
 
@@ -54,17 +56,17 @@ public class MainActivity extends AppCompatActivity {
         TapLoginHelper.registerLoginCallback(new TapLoginResultCallback() {
             @Override
             public void onLoginSuccess(AccessToken accessToken) {
-                Log.e("MainActivity", "onLoginSuccess" + "" + accessToken);
+                Log.e(TAG, "onLoginSuccess" + accessToken);
             }
 
             @Override
             public void onLoginCancel() {
-                Log.e("MainActivity", "onLoginCancel" + "");
+                Log.e(TAG, "onLoginCancel" + "");
             }
 
             @Override
             public void onLoginError(com.taptap.sdk.AccountGlobalError accountGlobalError) {
-                Log.e("MainActivity", "onLoginError" + " " + accountGlobalError.toJsonString());
+                Log.e(TAG, "onLoginError" + accountGlobalError);
             }
         });
     }
@@ -90,12 +92,12 @@ public class MainActivity extends AppCompatActivity {
         TapLoginHelper.fetchProfileForCurrentAccessToken(new ApiCallback<Profile>() {
             @Override
             public void onSuccess(Profile profile) {
-                Log.e("MainActivity", "onSuccess" + " " + profile);
+                Log.e(TAG, "onSuccess:" + profile);
             }
 
             @Override
             public void onError(Throwable throwable) {
-                Log.e("MainActivity", "onError" + "");
+                Log.e(TAG, "onError:" + "", throwable);
             }
         });
     }
