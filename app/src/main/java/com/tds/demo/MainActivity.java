@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onCallback(int code, String msg) {
                 Log.e("MainActivity", "onCallback moment " + "  " + code + "   " + msg);
-                if (code == TapTapMomentSdk.CALLBACK_CODE_LOGIN_SUCCESS)
-                    TapTapMomentSdk.setHandleLoginResult(true);
             }
         });
 
