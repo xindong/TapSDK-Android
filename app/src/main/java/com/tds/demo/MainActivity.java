@@ -1,5 +1,6 @@
 package com.tds.demo;
 
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -19,6 +20,8 @@ import com.tds.TdsInitializer;
 import com.tds.moment.TapTapMomentSdk;
 import com.tds.moment.TapTapMomentSdk.Config;
 import com.tds.moment.TapTapMomentSdk.TapMomentCallback;
+import com.tds.tapdb.sdk.LoginType;
+import com.tds.tapdb.sdk.TapDB;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
 
         //开启TapDB
         TdsInitializer.enableTapDB(this, "1.0", "default");
+
+        // 游戏启动时， 检测到当前已经登录游戏， 则调用该方法
+        // userId 为游戏平台中唯一的账号 ID
+        String userId = TapDB.setUser(Profile.getCurrentProfile().getOpenid();
+        if (!TextUtils.isEmpty(userId)) {
+            TapDB.setUser(userId);
+        }
 
         // 开启动态
         TdsInitializer.enableMoment(this);
