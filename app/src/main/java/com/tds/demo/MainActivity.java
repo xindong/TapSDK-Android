@@ -6,11 +6,13 @@ import android.view.View;
 import android.webkit.WebView;
 
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import com.taptap.sdk.AccessToken;
+import com.taptap.sdk.AccountGlobalError;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapTapSdk;
 import com.taptap.sdk.helper.TapLoginHelper;
@@ -20,7 +22,6 @@ import com.tds.TdsInitializer;
 import com.tds.moment.TapTapMomentSdk;
 import com.tds.moment.TapTapMomentSdk.Config;
 import com.tds.moment.TapTapMomentSdk.TapMomentCallback;
-import com.tds.tapdb.sdk.LoginType;
 import com.tds.tapdb.sdk.TapDB;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,11 +46,15 @@ public class MainActivity extends AppCompatActivity {
         //开启TapDB
         TdsInitializer.enableTapDB(this, "1.0", "default");
 
-        // 游戏启动时， 检测到当前已经登录游戏， 则调用该方法
-        // userId 为游戏平台中唯一的账号 ID
-        String userId = TapDB.setUser(Profile.getCurrentProfile().getOpenid();
-        if (!TextUtils.isEmpty(userId)) {
-            TapDB.setUser(userId);
+        /**userId 为游戏平台中用户唯一的账号 ID。
+         * 可以根据自己的业务将用户userId传给sdk，也可以用SDK返回的openId作为用户userId来标记用户
+         * 此处调用表示用户已经登录: 可以通过Profile.getCurrentProfile()获取到登录信息的情况下调用setUser
+         */
+        if (Profile.getCurrentProfile() != null) {
+            String userId = Profile.getCurrentProfile().getOpenid();
+            if (!TextUtils.isEmpty(userId)) {
+                TapDB.setUser(userId);
+            }
         }
 
         // 开启动态
@@ -76,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLoginError(com.taptap.sdk.AccountGlobalError accountGlobalError) {
-                Log.e(TAG, "onLoginError" + accountGlobalError);
+                Log.e(TAG, accountGlobalError.getError());
             }
         });
     }
@@ -111,5 +116,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 }
