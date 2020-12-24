@@ -1,5 +1,7 @@
 package com.tds.demo;
 
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -7,11 +9,13 @@ import android.webkit.WebView;
 
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
 import com.taptap.sdk.AccessToken;
+import com.taptap.sdk.AccountGlobalError;
 import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapTapSdk;
 import com.taptap.sdk.helper.TapLoginHelper;
@@ -71,15 +75,38 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLoginSuccess(AccessToken accessToken) {
                 Log.e(TAG, "onLoginSuccess" + accessToken);
+                // 执行登录后相关操作
             }
 
             @Override
             public void onLoginCancel() {
+                // 用户取消登录
                 Log.e(TAG, "onLoginCancel" + "");
             }
 
             @Override
             public void onLoginError(com.taptap.sdk.AccountGlobalError accountGlobalError) {
+                // 登录过程中出现异常
+                if (null != accountGlobalError) {
+                    // 执行 TapTap Token 失效后的相关处理操作
+                    if (AccountGlobalError.LOGIN_ERROR_ACCESS_DENIED.equals(accountGlobalError.error)
+                            || AccountGlobalError.LOGIN_ERROR_FORBIDDEN.equals(accountGlobalError.error)) {
+                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setNegativeButton(
+                            "Cancel", new OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            })
+                            .setPositiveButton("重新登录", new OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    TapLoginHelper.startTapLogin(MainActivity.this, TapTapSdk.SCOPE_PUIBLIC_PROFILE);
+                                }
+                            }).create();
+                        alertDialog.show();
+                    }
+                }
                 Log.e(TAG, accountGlobalError.getError());
             }
         });
