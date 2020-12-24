@@ -5,38 +5,43 @@
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
+  android:id="@+id/tds_button_container"
   tools:context=".MainActivity">
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text=" login"
+    android:text="登录"
     android:onClick="sdkLogin"/>
 
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="logout"
+    android:text="登出"
+    android:layout_marginTop="20dp"
     android:onClick="sdkLogout"/>
 
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="fetch user profile"
+    android:text="获取用户最新信息"
+    android:layout_marginTop="20dp"
     android:onClick="fetchUserProfile"/>
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="moment"
+    android:text="打开动态"
+    android:layout_marginTop="20dp"
     android:onClick="sdkMoment"/>
 
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="red point"
+    android:text="获取动态未读数"
+    android:layout_marginTop="20dp"
     android:onClick="getRedPoint"/>
 </LinearLayout>

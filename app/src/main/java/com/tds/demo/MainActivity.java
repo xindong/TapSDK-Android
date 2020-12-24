@@ -2,18 +2,16 @@ package com.tds.demo;
 
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.webkit.WebView;
 
-import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.taptap.sdk.AccessToken;
 import com.taptap.sdk.AccountGlobalError;
 import com.taptap.sdk.Profile;
@@ -29,11 +27,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "TDSDemoActivity";
 
+    private View buttonContainer;
+
+    private AlertDialog alertDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        buttonContainer = findViewById(R.id.tds_button_container);
 
         //初始化SDK
         com.tds.TdsConfig.Builder configBuilder = new com.tds.TdsConfig.Builder()
@@ -62,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         TapTapMomentSdk.setCallback(new TapMomentCallback() {
             @Override
             public void onCallback(int code, String msg) {
+                switch (code) {
+                    case TapTapMomentSdk.CALLBACK_CODE_GET_NOTICE_SUCCESS:
+                        Snackbar.make(buttonContainer, "动态未读消息数目:" + msg, Snackbar.LENGTH_LONG).show();
+                        break;
+                }
                 Log.e(TAG, "onCallback" + "  code:" + code + "  msg:" + msg);
             }
         });
@@ -73,12 +81,14 @@ public class MainActivity extends AppCompatActivity {
             public void onLoginSuccess(AccessToken accessToken) {
                 Log.e(TAG, "onLoginSuccess" + accessToken);
                 // 执行登录后相关操作
+                Snackbar.make(buttonContainer, "用户登录成功:" + Profile.getCurrentProfile().getName(), Snackbar.LENGTH_LONG).show();
             }
 
             @Override
             public void onLoginCancel() {
                 // 用户取消登录
                 Log.e(TAG, "onLoginCancel" + "");
+                Snackbar.make(buttonContainer, "用户取消登录", Snackbar.LENGTH_LONG).show();
             }
 
             @Override
@@ -88,8 +98,14 @@ public class MainActivity extends AppCompatActivity {
                     // 执行 TapTap Token 失效后的相关处理操作
                     if (AccountGlobalError.LOGIN_ERROR_ACCESS_DENIED.equals(accountGlobalError.getError())
                             || AccountGlobalError.LOGIN_ERROR_FORBIDDEN.equals(accountGlobalError.getError())) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setNegativeButton(
-                            "Cancel", new OnClickListener() {
+                        if (null != alertDialog && alertDialog.isShowing()) {
+                            return;
+                        }
+                        alertDialog = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("错误")
+                            .setMessage("当前用户已失效， 请重新登录!")
+                            .setNegativeButton(
+                            "取消", new OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
@@ -115,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void sdkLogout(View view) {
         TapLoginHelper.logout();
+        Snackbar.make(buttonContainer, "退出登录", Snackbar.LENGTH_LONG).show();
     }
 
     public void sdkMoment(View view) {
@@ -123,20 +140,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void getRedPoint(View view) {
-        TapTapMomentSdk.getNoticeData();
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Snackbar.make(buttonContainer, "当前用户未登录", Snackbar.LENGTH_LONG).show();
+        } else {
+            TapTapMomentSdk.getNoticeData();
+        }
     }
 
     public void fetchUserProfile(View view) {
-        TapLoginHelper.fetchProfileForCurrentAccessToken(new ApiCallback<Profile>() {
-            @Override
-            public void onSuccess(Profile profile) {
-                Log.e(TAG, "onSuccess:" + profile);
-            }
+        if (AccessToken.getCurrentAccessToken() == null) {
+            Snackbar.make(buttonContainer, "当前用户未登录", Snackbar.LENGTH_LONG).show();
+        } else {
+            TapLoginHelper.fetchProfileForCurrentAccessToken(new ApiCallback<Profile>() {
+                @Override
+                public void onSuccess(Profile profile) {
+                    Log.e(TAG, "onSuccess:" + profile);
+                    Snackbar.make(buttonContainer, "获取用户信息成功:" + profile.getName(), Snackbar.LENGTH_LONG).show();
+                }
 
-            @Override
-            public void onError(Throwable throwable) {
-                Log.e(TAG, "onError:" + "", throwable);
-            }
-        });
+                @Override
+                public void onError(Throwable throwable) {
+                    Log.e(TAG, "onError:" + "", throwable);
+                    Snackbar.make(buttonContainer, "获取用户信息失败", Snackbar.LENGTH_LONG).show();
+                }
+            });
+        }
+
     }
 }
