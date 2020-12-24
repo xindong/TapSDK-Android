@@ -13,7 +13,8 @@ import android.os.Bundle;
 
 import com.taptap.sdk.AccessToken;
 import com.taptap.sdk.Profile;
-import com.taptap.sdk.TapLoginHelper;
+import com.taptap.sdk.TapTapSdk;
+import com.taptap.sdk.helper.TapLoginHelper;
 import com.taptap.sdk.net.Api.ApiCallback;
 import com.tds.TdsInitializer;
 import com.tds.moment.TapTapMomentSdk;
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         //注册登录回调
         TapLoginHelper.registerLoginCallback(new TapLoginHelper.TapLoginResultCallback() {
             @Override
@@ -84,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sdkLogin(View view) {
-        TapLoginHelper.startTapLogin(MainActivity.this, TapLoginHelper.SCOPE_PUBLIC_PROFILE);
+        TapLoginHelper.startTapLogin(MainActivity.this, TapTapSdk.SCOPE_PUIBLIC_PROFILE);
     }
 
     public void sdkLogout(View view) {
