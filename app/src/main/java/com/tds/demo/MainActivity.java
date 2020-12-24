@@ -17,8 +17,7 @@ import android.os.Bundle;
 import com.taptap.sdk.AccessToken;
 import com.taptap.sdk.AccountGlobalError;
 import com.taptap.sdk.Profile;
-import com.taptap.sdk.TapTapSdk;
-import com.taptap.sdk.helper.TapLoginHelper;
+import com.taptap.sdk.TapLoginHelper;
 import com.taptap.sdk.net.Api.ApiCallback;
 import com.tds.TdsInitializer;
 import com.tds.moment.TapTapMomentSdk;
@@ -35,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        WebView.setWebContentsDebuggingEnabled(true);
 
         //初始化SDK
         com.tds.TdsConfig.Builder configBuilder = new com.tds.TdsConfig.Builder()
@@ -89,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 // 登录过程中出现异常
                 if (null != accountGlobalError) {
                     // 执行 TapTap Token 失效后的相关处理操作
-                    if (AccountGlobalError.LOGIN_ERROR_ACCESS_DENIED.equals(accountGlobalError.error)
-                            || AccountGlobalError.LOGIN_ERROR_FORBIDDEN.equals(accountGlobalError.error)) {
+                    if (AccountGlobalError.LOGIN_ERROR_ACCESS_DENIED.equals(accountGlobalError.getError())
+                            || AccountGlobalError.LOGIN_ERROR_FORBIDDEN.equals(accountGlobalError.getError())) {
                         AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).setNegativeButton(
                             "Cancel", new OnClickListener() {
                                 @Override
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
                             .setPositiveButton("重新登录", new OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    TapLoginHelper.startTapLogin(MainActivity.this, TapTapSdk.SCOPE_PUIBLIC_PROFILE);
+                                    TapLoginHelper.startTapLogin(MainActivity.this, TapLoginHelper.SCOPE_PUBLIC_PROFILE);
                                 }
                             }).create();
                         alertDialog.show();
@@ -113,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sdkLogin(View view) {
-        TapLoginHelper.startTapLogin(MainActivity.this, TapTapSdk.SCOPE_PUIBLIC_PROFILE);
+        TapLoginHelper.startTapLogin(MainActivity.this, TapLoginHelper.SCOPE_PUBLIC_PROFILE);
     }
 
     public void sdkLogout(View view) {
