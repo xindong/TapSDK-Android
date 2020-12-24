@@ -12,11 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.taptap.sdk.AccessToken;
-import com.taptap.sdk.AccountGlobalError;
 import com.taptap.sdk.Profile;
-import com.taptap.sdk.TapTapSdk;
-import com.taptap.sdk.helper.TapLoginHelper;
-import com.taptap.sdk.helper.TapLoginHelper.TapLoginResultCallback;
+import com.taptap.sdk.TapLoginHelper;
 import com.taptap.sdk.net.Api.ApiCallback;
 import com.tds.TdsInitializer;
 import com.tds.moment.TapTapMomentSdk;
@@ -50,11 +47,11 @@ public class MainActivity extends AppCompatActivity {
          * 可以根据自己的业务将用户userId传给sdk，也可以用SDK返回的openId作为用户userId来标记用户
          * 此处调用表示用户已经登录: 可以通过Profile.getCurrentProfile()获取到登录信息的情况下调用setUser
          */
-        if (Profile.getCurrentProfile() != null) {
-            String userId = Profile.getCurrentProfile().getOpenid();
-            if (!TextUtils.isEmpty(userId)) {
-                TapDB.setUser(userId);
-            }
+        Profile profile = Profile.getCurrentProfile();
+        if (profile != null) {
+            Log.e(TAG,profile.toString());
+            String userId = profile.getOpenid();
+            TapDB.setUser(userId);
         }
 
         // 开启动态
@@ -68,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //注册登录回调
-        TapLoginHelper.registerLoginCallback(new TapLoginResultCallback() {
+        TapLoginHelper.registerLoginCallback(new TapLoginHelper.TapLoginResultCallback() {
             @Override
             public void onLoginSuccess(AccessToken accessToken) {
                 Log.e(TAG, "onLoginSuccess" + accessToken);
@@ -87,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sdkLogin(View view) {
-        TapLoginHelper.startTapLogin(MainActivity.this, TapTapSdk.SCOPE_PUIBLIC_PROFILE);
+        TapLoginHelper.startTapLogin(MainActivity.this, TapLoginHelper.SCOPE_PUBLIC_PROFILE);
     }
 
     public void sdkLogout(View view) {
