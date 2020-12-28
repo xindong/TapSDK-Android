@@ -29,12 +29,23 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
             signingConfig signingConfigs.config
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    if (variant.buildType.name.endsWith("release")) {
+                        outputFileName = "TapSDKDemo_${defaultConfig.versionName}_${releaseTime()}.apk"
+                    }
+                }
+            }
         }
 
         debug {
             signingConfig signingConfigs.config
         }
     }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyyMMdd_HH_mm", TimeZone.getTimeZone("GMT+08:00"))
 }
 
 repositories {
