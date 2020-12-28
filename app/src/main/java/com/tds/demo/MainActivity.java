@@ -2,6 +2,7 @@ package com.tds.demo;
 
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 
@@ -18,6 +19,7 @@ import com.taptap.sdk.Profile;
 import com.taptap.sdk.TapLoginHelper;
 import com.taptap.sdk.net.Api.ApiCallback;
 import com.tds.TdsInitializer;
+import com.tds.demo.tapdb.TapDBActivity;
 import com.tds.moment.TapTapMomentSdk;
 import com.tds.moment.TapTapMomentSdk.Config;
 import com.tds.moment.TapTapMomentSdk.TapMomentCallback;
@@ -175,6 +177,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    public void configTapDB(View view) {
+        Intent intent = new Intent(MainActivity.this, TapDBActivity.class);
+        startActivity(intent);
     }
 }

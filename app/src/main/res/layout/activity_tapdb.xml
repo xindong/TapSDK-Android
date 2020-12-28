@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/setNameRelativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/setNameTitleTextView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Name:"
+            />
+        <EditText
+            android:id="@+id/setNameValueEditTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="input name please"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setLevelRelativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/setLevelTitleTextView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Level:"
+            />
+        <EditText
+            android:id="@+id/setLevelValueEditTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="input level please"
+            android:inputType="number"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/setServerRelativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/setServerTitleTextView"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Server:"
+            />
+        <EditText
+            android:id="@+id/setServerValueEditTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="input server please"
+            />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="提交"
+        />
+</LinearLayout>

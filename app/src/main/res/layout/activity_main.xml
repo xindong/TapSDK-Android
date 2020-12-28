@@ -44,4 +44,12 @@
     android:text="获取动态未读数"
     android:layout_marginTop="20dp"
     android:onClick="getRedPoint"/>
+
+  <Button
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="TapDB参数设置"
+      android:layout_marginTop="20dp"
+      android:onClick="configTapDB"/>
+
 </LinearLayout>
