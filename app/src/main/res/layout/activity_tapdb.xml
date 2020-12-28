@@ -1,73 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical"
+  tools:context=".tapdb.TapDBActivity">
+
+  <TextView
+    android:id="@+id/tipsTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+  <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content">
 
-    <RelativeLayout
-        android:id="@+id/setNameRelativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:id="@+id/setNameTitleTextView"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Name:"
-            />
-        <EditText
-            android:id="@+id/setNameValueEditTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="input name please"
-            />
-    </RelativeLayout>
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Name:" />
 
-    <RelativeLayout
-        android:id="@+id/setLevelRelativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:id="@+id/setLevelTitleTextView"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Level:"
-            />
-        <EditText
-            android:id="@+id/setLevelValueEditTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="input level please"
-            android:inputType="number"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/setServerRelativeLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        >
-        <TextView
-            android:id="@+id/setServerTitleTextView"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Server:"
-            />
-        <EditText
-            android:id="@+id/setServerValueEditTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="input server please"
-            />
-    </RelativeLayout>
+    <EditText
+      android:id="@+id/setNameValueEditTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:hint="input name please"
+      android:text="nameTest" />
 
     <Button
-        android:id="@+id/submitButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="提交"
-        />
+      android:id="@+id/setNameButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="setName"
+      android:text="set Name"
+      android:textAllCaps="false" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Level:" />
+
+    <EditText
+      android:id="@+id/setLevelValueEditTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:hint="input level please"
+      android:inputType="number"
+      android:text="1" />
+
+    <Button
+      android:id="@+id/setLevelButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="setLevel"
+      android:text="set Level"
+      android:textAllCaps="false" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Server:" />
+
+    <EditText
+      android:id="@+id/setServerValueEditTextView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:hint="input server please"
+      android:text="serverTest" />
+
+    <Button
+      android:id="@+id/setServerButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="setServer"
+      android:text="set Server"
+      android:textAllCaps="false" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Charge:" />
+
+
+    <Button
+      android:id="@+id/onChargeButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="onCharge"
+      android:text="onCharge"
+      android:textAllCaps="false" />
+  </LinearLayout>
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Event:" />
+
+    <Button
+      android:id="@+id/onEventButton"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:onClick="onEvent"
+      android:text="onEvent"
+      android:textAllCaps="false" />
+  </LinearLayout>
+
 </LinearLayout>
