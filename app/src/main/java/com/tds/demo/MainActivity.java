@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
     private View buttonContainer;
 
+    private boolean enableTapDB = true;
+
     private AlertDialog alertDialog;
 
 
@@ -45,23 +47,27 @@ public class MainActivity extends AppCompatActivity {
 
         TdsInitializer.init(configBuilder.build());
 
-        //开启TapDB
-        TdsInitializer.enableTapDB(this, "1.0", "default");
+        if (enableTapDB) {
+            //开启TapDB
+            TdsInitializer.enableTapDB(this, "1.0", "default");
 
-        /**userId 为游戏平台中用户唯一的账号 ID。
-         * 可以根据自己的业务将用户userId传给sdk，也可以用SDK返回的openId作为用户userId来标记用户
-         * 此处调用表示用户已经登录: 可以通过Profile.getCurrentProfile()获取到登录信息的情况下调用setUser
-         */
-        Profile profile = Profile.getCurrentProfile();
-        if (profile != null) {
-            Log.e(TAG,profile.toString());
-            String userId = profile.getOpenid();
-            TapDB.setUser(userId);
+            /**userId 为游戏平台中用户唯一的账号 ID。
+             * 可以根据自己的业务将用户userId传给sdk，也可以用SDK返回的openId作为用户userId来标记用户
+             * 此处调用表示用户已经登录: 可以通过Profile.getCurrentProfile()获取到登录信息的情况下调用setUser
+             */
+            Profile profile = Profile.getCurrentProfile();
+            if (profile != null) {
+                Log.e(TAG,profile.toString());
+                String userId = profile.getOpenid();
+                TapDB.setUser(userId);
+            }
         }
+
+
 
         // 开启动态
         TdsInitializer.enableMoment(this);
-        //注册动态回调。动态相关的回调都会到这里，详情 https://tapsdkdoc.xdrnd.com/tap-fun-moment#3-%E6%B7%BB%E5%8A%A0%E5%9B%9E%E8%B0%83
+        //注册动态回调。动态相关的回调都会到这里
         TapTapMomentSdk.setCallback(new TapMomentCallback() {
             @Override
             public void onCallback(int code, String msg) {
@@ -82,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onLoginSuccess" + accessToken);
                 // 执行登录后相关操作
                 Snackbar.make(buttonContainer, "用户登录成功:" + Profile.getCurrentProfile().getName(), Snackbar.LENGTH_LONG).show();
+
+                if (enableTapDB) {
+                    TapDB.setUser(Profile.getCurrentProfile().getOpenid());
+                }
             }
 
             @Override
