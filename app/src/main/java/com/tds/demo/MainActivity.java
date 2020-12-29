@@ -3,16 +3,12 @@ package com.tds.demo;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-
-
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.os.Bundle;
-
 import com.google.android.material.snackbar.Snackbar;
 import com.taptap.sdk.AccessToken;
 import com.taptap.sdk.AccountGlobalError;
@@ -66,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             if (profile != null) {
                 infoTextView.setText("已登录");
                 Log.e(TAG,profile.toString());
-                String userId = profile.getOpenid();
+                String userId = profile.getOpenid() + "-userId"; //添加后缀方便
                 TapDB.setUser(userId, LoginType.TapTap);
             } else {
                 infoTextView.setText("未登录");
@@ -100,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                 Snackbar.make(buttonContainer, "用户登录成功:" + Profile.getCurrentProfile().getName(), Snackbar.LENGTH_LONG).show();
                 infoTextView.setText("已登录");
                 if (enableTapDB) {
-                    TapDB.setUser(Profile.getCurrentProfile().getOpenid(), LoginType.TapTap);
+                    TapDB.setUser(Profile.getCurrentProfile().getOpenid() + "-userId", LoginType.TapTap);
                 }
             }
 
