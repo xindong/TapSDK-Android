@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 
 
+import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +24,7 @@ import com.tds.demo.tapdb.TapDBActivity;
 import com.tds.moment.TapTapMomentSdk;
 import com.tds.moment.TapTapMomentSdk.Config;
 import com.tds.moment.TapTapMomentSdk.TapMomentCallback;
+import com.tds.tapdb.sdk.LoginType;
 import com.tds.tapdb.sdk.TapDB;
 
 public class MainActivity extends AppCompatActivity {
@@ -35,12 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
     private AlertDialog alertDialog;
 
+    private TextView infoTextView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         buttonContainer = findViewById(R.id.tds_button_container);
+        infoTextView = findViewById(R.id.infoTextView);
 
         //初始化SDK
         com.tds.TdsConfig.Builder configBuilder = new com.tds.TdsConfig.Builder()
@@ -59,9 +64,12 @@ public class MainActivity extends AppCompatActivity {
              */
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
+                infoTextView.setText("已登录");
                 Log.e(TAG,profile.toString());
                 String userId = profile.getOpenid();
-                TapDB.setUser(userId);
+                TapDB.setUser(userId, LoginType.TapTap);
+            } else {
+                infoTextView.setText("未登录");
             }
         }
 
@@ -90,9 +98,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "onLoginSuccess" + accessToken);
                 // 执行登录后相关操作
                 Snackbar.make(buttonContainer, "用户登录成功:" + Profile.getCurrentProfile().getName(), Snackbar.LENGTH_LONG).show();
-
+                infoTextView.setText("已登录");
                 if (enableTapDB) {
-                    TapDB.setUser(Profile.getCurrentProfile().getOpenid());
+                    TapDB.setUser(Profile.getCurrentProfile().getOpenid(), LoginType.TapTap);
                 }
             }
 
@@ -105,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLoginError(com.taptap.sdk.AccountGlobalError accountGlobalError) {
+              infoTextView.setText("登录异常");
                 // 登录过程中出现异常
                 if (null != accountGlobalError) {
                     // 执行 TapTap Token 失效后的相关处理操作

@@ -2,55 +2,60 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/tds_button_container"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical"
-  android:id="@+id/tds_button_container"
   tools:context=".MainActivity">
 
+  <TextView
+    android:id="@+id/infoTextView"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="登录"
-    android:onClick="sdkLogin"/>
+    android:onClick="sdkLogin"
+    android:text="登录" />
 
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="登出"
     android:layout_marginTop="20dp"
-    android:onClick="sdkLogout"/>
+    android:onClick="sdkLogout"
+    android:text="登出" />
 
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="获取用户最新信息"
     android:layout_marginTop="20dp"
-    android:onClick="fetchUserProfile"/>
+    android:onClick="fetchUserProfile"
+    android:text="获取用户最新信息" />
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="打开动态"
     android:layout_marginTop="20dp"
-    android:onClick="sdkMoment"/>
+    android:onClick="sdkMoment"
+    android:text="打开动态" />
 
 
   <Button
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="获取动态未读数"
     android:layout_marginTop="20dp"
-    android:onClick="getRedPoint"/>
+    android:onClick="getRedPoint"
+    android:text="获取动态未读数" />
 
   <Button
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textAllCaps="false"
-      android:text="进入TapDB测试"
-      android:layout_marginTop="20dp"
-      android:onClick="configTapDB"/>
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:onClick="configTapDB"
+    android:text="进入TapDB测试"
+    android:textAllCaps="false" />
 
 </LinearLayout>
