@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
     //初始化SDK
     com.tds.TdsConfig.Builder configBuilder = new com.tds.TdsConfig.Builder()
-        .appContext(getApplicationContext())
-        .clientId("FwFdCIr6u71WQDQwQN");
+            .appContext(getApplicationContext())
+            .clientId("FwFdCIr6u71WQDQwQN");
 
     TdsInitializer.init(configBuilder.build());
 
@@ -115,27 +115,26 @@ public class MainActivity extends AppCompatActivity {
         // 登录过程中出现异常
         if (null != accountGlobalError) {
           // 执行 TapTap Token 失效后的相关处理操作
-          if (AccountGlobalError.LOGIN_ERROR_ACCESS_DENIED.equals(accountGlobalError.getError())
-              || AccountGlobalError.LOGIN_ERROR_FORBIDDEN.equals(accountGlobalError.getError())) {
+          if (AccountGlobalError.LOGIN_ERROR_ACCESS_DENIED.equals(accountGlobalError.getError())) {
             if (null != alertDialog && alertDialog.isShowing()) {
               return;
             }
             alertDialog = new AlertDialog.Builder(MainActivity.this)
-                .setTitle("错误")
-                .setMessage("当前用户已失效， 请重新登录!")
-                .setNegativeButton(
-                    "取消", new OnClickListener() {
+                    .setTitle("错误")
+                    .setMessage("当前用户已失效， 请重新登录!")
+                    .setNegativeButton(
+                            "取消", new OnClickListener() {
+                              @Override
+                              public void onClick(DialogInterface dialog, int which) {
+
+                              }
+                            })
+                    .setPositiveButton("重新登录", new OnClickListener() {
                       @Override
                       public void onClick(DialogInterface dialog, int which) {
-
+                        TapLoginHelper.startTapLogin(MainActivity.this, TapLoginHelper.SCOPE_PUBLIC_PROFILE);
                       }
-                    })
-                .setPositiveButton("重新登录", new OnClickListener() {
-                  @Override
-                  public void onClick(DialogInterface dialog, int which) {
-                    TapLoginHelper.startTapLogin(MainActivity.this, TapLoginHelper.SCOPE_PUBLIC_PROFILE);
-                  }
-                }).create();
+                    }).create();
             alertDialog.show();
           }
         }
